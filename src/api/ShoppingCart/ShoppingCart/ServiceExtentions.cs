@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ShoppingCart.Services;
 
 namespace ShoppingCart
 {
@@ -16,7 +17,8 @@ namespace ShoppingCart
 
         public static void RegisterServicesIoc(this IServiceCollection services) 
         {
-            services.AddScoped<ShoppingCart.Services.IShippingPricesService, ShoppingCart.Services.ShippingPricesService>();
+            services.AddScoped<IShippingPricesService, ShippingPricesService>();
+            services.AddScoped<IProductsService, ProductsService>();
         }
     }
 }

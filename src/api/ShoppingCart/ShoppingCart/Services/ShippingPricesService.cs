@@ -11,7 +11,8 @@ namespace ShoppingCart.Services
         private IEnumerable<ShippingPrice> repo;
         public ShippingPricesService()
         {
-            repo = new List<ShippingPrice>() {
+            repo = new List<ShippingPrice>() 
+            {
                 new ShippingPrice() { Type = "Overnight", Price = 25.99M },
                 new ShippingPrice() { Type = "2-Day", Price = 9.99M },
                 new ShippingPrice() { Type = "Postal", Price = 2.99M }
