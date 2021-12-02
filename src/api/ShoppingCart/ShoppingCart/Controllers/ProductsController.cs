@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ShoppingCart.Models;
 using ShoppingCart.Services;
+using System.Transactions;
 
 namespace ShoppingCart.Controllers
 {
@@ -26,6 +27,20 @@ namespace ShoppingCart.Controllers
         [HttpGet("{id}")]
         public async Task<Product> GetProduct(int id) =>
             await productsService.GetProductByIdAsync(id);
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Product product)
+        {
+            using (var scope = new TransactionScope())
+            {
+                Task<Product> createTask = this.productsService.CreateProductAsync(product);
+                await Task.WhenAll(createTask);
+
+                scope.Complete();
+                Product newProduct = createTask.Result;
+                return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
+            }
+        }
 
     }
 }
