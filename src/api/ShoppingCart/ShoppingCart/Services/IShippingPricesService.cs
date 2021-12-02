@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace ShoppingCart.Services
     public interface IShippingPricesService
     {
         Task<IEnumerable<ShippingPrice>> GetAllShippingPricesAsync();
+        Task<ShippingPrice> CreateShippingPriceAsync(ShippingPrice shippingPrice);
     }
 }

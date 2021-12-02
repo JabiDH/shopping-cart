@@ -1,4 +1,6 @@
-﻿using ShoppingCart.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShoppingCart.DbContexts;
+using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,20 +10,27 @@ namespace ShoppingCart.Services
 {
     public class ShippingPricesService : IShippingPricesService
     {
-        private IEnumerable<ShippingPrice> repo;
-        public ShippingPricesService()
+        private ShoppingCartDbContext dbContext;
+        public ShippingPricesService(ShoppingCartDbContext dbContext)
         {
-            repo = new List<ShippingPrice>() 
-            {
-                new ShippingPrice() { Type = "Overnight", Price = 25.99M },
-                new ShippingPrice() { Type = "2-Day", Price = 9.99M },
-                new ShippingPrice() { Type = "Postal", Price = 2.99M }
-            };
+            this.dbContext = dbContext;
         }
 
         public async Task<IEnumerable<ShippingPrice>> GetAllShippingPricesAsync()
         {
-            return await Task.FromResult(repo.ToList());
+            return await Task.FromResult(this.dbContext.ShippingPrices.ToList());
+        }
+
+        public async Task<ShippingPrice> CreateShippingPriceAsync(ShippingPrice shippingPrice)
+        {
+            var newShippingPrice = this.dbContext.ShippingPrices.Add(shippingPrice).Entity;            
+            Save();
+            return await Task.FromResult(newShippingPrice);
+        }
+
+        private void Save()
+        {
+            this.dbContext.SaveChanges();
         }
     }
 }

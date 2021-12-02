@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ShoppingCart.Extentions;
 
 namespace ShoppingCart
 {
@@ -30,6 +31,7 @@ namespace ShoppingCart
             services.AddControllers();            
             services.ConfigureCors(CorsPolicy);
             services.RegisterServicesIoc();
+            services.RegisterDbContext(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

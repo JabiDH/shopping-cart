@@ -7,6 +7,7 @@ namespace ShoppingCart.Models
 {
     public class ShippingPrice
     {
+        public int Id { get; set; }
         public string Type { get; set; }
         public decimal Price { get; set; }
     }
